@@ -1,0 +1,73 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+  output   = "../generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+// Model utama untuk pemain
+model User {
+  id        Int      @id @default(autoincrement())
+
+  username  String   @unique // Username pemain, harus unik
+  createdAt DateTime @default(now())
+
+  // Relasi
+  notes   Note[]
+  statuses Status[]
+  pets    Pet[]
+
+  @@map("users")
+}
+
+// Model untuk catatan
+model Note {
+  id        Int      @id @default(autoincrement())
+  userId    Int
+
+  content   String
+  createdAt DateTime @default(now())
+
+  // Relasi ke User
+  user      User     @relation(fields: [userId], references: [id])
+
+  @@map("notes")
+}
+
+// Model untuk status pemain
+model Status {
+  id          Int      @id @default(autoincrement())
+  userId      Int
+
+  description String
+  imageUrl    String? // URL gambar yang di-upload, bisa null
+  createdAt   DateTime @default(now())
+
+  // Relasi ke User
+  user      User     @relation(fields: [userId], references: [id])
+
+  @@map("statuses")
+}
+
+// Model untuk pet
+model Pet {
+  id        Int      @id @default(autoincrement())
+  ownerId   Int
+
+  petName   String
+  rarity    String
+
+  // Relasi ke User
+  owner     User     @relation(fields: [ownerId], references: [id])
+
+  @@map("pets")
+}
