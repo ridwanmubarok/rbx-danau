@@ -14,6 +14,7 @@ import { StatusModule } from './core/status/status.module';
 import { LoggerMiddleware } from './common/middleware/logger.middleware';
 import { CorsMiddleware } from './common/middleware/cors.middleware';
 import { NoteModule } from './core/note/note.module';
+import { PetModule } from './core/pet/pet.module';
 import { StaticTokenAuthMiddleware } from './common/middleware/static-token-auth.middleware';
 
 @Module({
@@ -26,6 +27,7 @@ import { StaticTokenAuthMiddleware } from './common/middleware/static-token-auth
     FeedbackModule,
     StatusModule,
     NoteModule,
+    PetModule,
   ],
   controllers: [AppController],
   providers: [AppService],
