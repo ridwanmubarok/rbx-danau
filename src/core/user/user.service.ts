@@ -1,16 +1,11 @@
 import { Injectable } from '@nestjs/common';
 import { PrismaService } from 'src/common/services/prisma/prisma.service';
-import { hash, verify } from 'argon2';
-import { BadRequestException } from 'src/common/exceptions/badRequest.exception';
-import { 
+import {
   UpdateOrCreateUserUseCase,
   GetUsersListUseCase,
-  GetUserByUsernameUseCase
+  GetUserByUsernameUseCase,
 } from './use-cases';
-import { 
-  UpdateOrCreateUserDto,
-  GetUsersListDto
-} from './dto';
+import { UpdateOrCreateUserDto, GetUsersListDto } from './dto';
 
 @Injectable()
 export class UserService {

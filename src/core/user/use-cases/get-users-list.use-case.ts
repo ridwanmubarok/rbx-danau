@@ -15,8 +15,8 @@ export class GetUsersListUseCase {
       ? {
           username: {
             contains: search,
-            mode: 'insensitive' as const
-          }
+            mode: 'insensitive' as const,
+          },
         }
       : {};
 
@@ -27,19 +27,19 @@ export class GetUsersListUseCase {
         skip,
         take: limit,
         orderBy: {
-          createdAt: 'desc'
+          createdAt: 'desc',
         },
         include: {
           _count: {
             select: {
               notes: true,
               statuses: true,
-              pets: true
-            }
-          }
-        }
+              pets: true,
+            },
+          },
+        },
       }),
-      this.prisma.user.count({ where })
+      this.prisma.user.count({ where }),
     ]);
 
     const totalPages = Math.ceil(total / limit);
@@ -49,7 +49,7 @@ export class GetUsersListUseCase {
       total,
       page,
       limit,
-      totalPages
+      totalPages,
     };
   }
 }

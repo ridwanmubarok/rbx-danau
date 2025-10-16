@@ -14,60 +14,64 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-// Model utama untuk pemain
+enum FeedbackType {
+  feature_request
+  bug_report
+  general
+}
+
+enum Role {
+  user
+  admin
+}
+
 model User {
   id        Int      @id @default(autoincrement())
-
-  username  String   @unique // Username pemain, harus unik
+  username  String   @unique
+  password  String?
+  roles     Role?    @default(user)
   createdAt DateTime @default(now())
-
-  // Relasi
-  notes   Note[]
-  statuses Status[]
-  pets    Pet[]
-
+  notes     Note[]
+  statuses  Status[]
+  pets      Pet[]
+  feedbacks Feedback[]
   @@map("users")
 }
 
-// Model untuk catatan
 model Note {
   id        Int      @id @default(autoincrement())
   userId    Int
-
   content   String
   createdAt DateTime @default(now())
-
-  // Relasi ke User
   user      User     @relation(fields: [userId], references: [id])
-
   @@map("notes")
 }
-
-// Model untuk status pemain
 model Status {
   id          Int      @id @default(autoincrement())
   userId      Int
-
   description String
-  imageUrl    String? // URL gambar yang di-upload, bisa null
+  imageUrl    String?
   createdAt   DateTime @default(now())
-
-  // Relasi ke User
   user      User     @relation(fields: [userId], references: [id])
-
   @@map("statuses")
 }
 
-// Model untuk pet
 model Pet {
   id        Int      @id @default(autoincrement())
   ownerId   Int
-
   petName   String
   rarity    String
-
-  // Relasi ke User
   owner     User     @relation(fields: [ownerId], references: [id])
-
   @@map("pets")
+}
+
+model Feedback {
+  id        Int      @id @default(autoincrement())
+  userId    Int
+  type      FeedbackType
+  message   String
+  rating    Int?
+  createdAt DateTime @default(now())
+  user      User     @relation(fields: [userId], references: [id])
+  @@map("feedbacks")
 }

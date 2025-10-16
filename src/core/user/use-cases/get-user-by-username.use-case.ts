@@ -11,27 +11,27 @@ export class GetUserByUsernameUseCase {
       include: {
         notes: {
           orderBy: {
-            createdAt: 'desc'
-          }
+            createdAt: 'desc',
+          },
         },
         statuses: {
           orderBy: {
-            createdAt: 'desc'
-          }
+            createdAt: 'desc',
+          },
         },
         pets: {
           orderBy: {
-            petName: 'asc'
-          }
+            petName: 'asc',
+          },
         },
         _count: {
           select: {
             notes: true,
             statuses: true,
-            pets: true
-          }
-        }
-      }
+            pets: true,
+          },
+        },
+      },
     });
   }
 }
