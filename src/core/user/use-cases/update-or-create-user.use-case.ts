@@ -11,7 +11,7 @@ export class UpdateOrCreateUserUseCase {
 
     // Try to find existing user by username
     const existingUser = await this.prisma.user.findUnique({
-      where: { username }
+      where: { username },
     });
 
     if (existingUser) {
@@ -20,15 +20,15 @@ export class UpdateOrCreateUserUseCase {
         where: { username },
         data: {
           // Only update if new data is provided
-          ...(data.username && { username: data.username })
-        }
+          ...(data.username && { username: data.username }),
+        },
       });
     } else {
       // Create new user
       return this.prisma.user.create({
         data: {
-          username
-        }
+          username,
+        },
       });
     }
   }

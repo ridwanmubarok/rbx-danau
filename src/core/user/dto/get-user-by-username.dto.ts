@@ -9,4 +9,6 @@ export const GetUserByUsernameSchema = z.object({
     .describe('The username of the user to retrieve'),
 });
 
-export class GetUserByUsernameDto extends createZodDto(GetUserByUsernameSchema) {}
+export class GetUserByUsernameDto extends createZodDto(
+  GetUserByUsernameSchema,
+) {}
