@@ -1,11 +1,12 @@
 import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
-import { UnprocessableEntityException, ValidationPipe } from '@nestjs/common';
+import { UnprocessableEntityException } from '@nestjs/common';
 import helmet from 'helmet';
 import { Logger, VersioningType } from '@nestjs/common';
 import appConfig from './config/app.config';
 import cookieParser from 'cookie-parser';
 import { swaggerConfig } from '@config/swagger.config';
+import { ZodValidationPipe } from 'nestjs-zod';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
@@ -18,29 +19,7 @@ async function bootstrap() {
     type: VersioningType.URI,
   });
 
-  app.useGlobalPipes(
-    new ValidationPipe({
-      whitelist: true,
-      transform: true,
-      exceptionFactory: (errors) => {
-        const formattedErrors = errors.map((err) => ({
-          field: err.property,
-          messages: Object.values(err.constraints || {}),
-        }));
-
-        return new UnprocessableEntityException({
-          statusCode: 422,
-          message: 'Validation Error',
-          data: null,
-          errors: {
-            name: 'VALIDATION_ERROR',
-            message: null,
-            validationErrors: formattedErrors,
-          },
-        });
-      },
-    }),
-  );
+  app.useGlobalPipes(new ZodValidationPipe());
   
   swaggerConfig(app, AppModule.appVersion, AppModule.environment);
 

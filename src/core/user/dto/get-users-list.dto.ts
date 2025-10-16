@@ -1,20 +1,29 @@
-import { IsOptional, IsString, IsNumber, Min } from 'class-validator';
-import { Type } from 'class-transformer';
+import { createZodDto } from 'nestjs-zod';
+import { z } from 'zod';
 
-export class GetUsersListDto {
-  @IsOptional()
-  @Type(() => Number)
-  @IsNumber()
-  @Min(1)
-  page?: number = 1;
+export const GetUsersListSchema = z.object({
+  page: z
+    .coerce
+    .number()
+    .int()
+    .min(1, 'Page must be at least 1')
+    .default(1)
+    .optional()
+    .describe('Page number for pagination'),
+  limit: z
+    .coerce
+    .number()
+    .int()
+    .min(1, 'Limit must be at least 1')
+    .max(100, 'Limit must not exceed 100')
+    .default(10)
+    .optional()
+    .describe('Number of items per page'),
+  search: z
+    .string()
+    .max(50, 'Search term must not exceed 50 characters')
+    .optional()
+    .describe('Search users by username (case-insensitive)'),
+});
 
-  @IsOptional()
-  @Type(() => Number)
-  @IsNumber()
-  @Min(1)
-  limit?: number = 10;
-
-  @IsOptional()
-  @IsString()
-  search?: string;
-}
+export class GetUsersListDto extends createZodDto(GetUsersListSchema) {}
