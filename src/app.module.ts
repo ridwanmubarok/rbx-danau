@@ -12,6 +12,7 @@ import { UserModule } from './core/user/user.module';
 import { StatusModule } from './core/status/status.module';
 import { LoggerMiddleware } from './common/middleware/logger.middleware';
 import { CorsMiddleware } from './common/middleware/cors.middleware';
+import { NoteModule } from './core/note/note.module';
 
 @Module({
   imports: [
@@ -21,6 +22,7 @@ import { CorsMiddleware } from './common/middleware/cors.middleware';
     }),
     UserModule,
     StatusModule,
+    NoteModule,
   ],
   controllers: [AppController],
   providers: [AppService],

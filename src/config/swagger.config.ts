@@ -2,8 +2,8 @@ import { INestApplication } from '@nestjs/common';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 
 const application = {
-  title: 'Diwirain API Documentation',
-  description: 'The Diwirain API description',
+  title: 'Roblox Danau API Documentation',
+  description: 'The Roblox Danau API description',
 } as const;
 
 /**

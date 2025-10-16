@@ -6,7 +6,6 @@ import {
   Param,
   Query,
   Put,
-  HttpCode,
   HttpStatus,
   NotFoundException,
 } from '@nestjs/common';
@@ -14,8 +13,6 @@ import {
   ApiTags,
   ApiOperation,
   ApiResponse,
-  ApiParam,
-  ApiQuery,
 } from '@nestjs/swagger';
 import { UserService } from './user.service';
 import { successResponse } from 'src/utils/response.utils';
@@ -27,7 +24,6 @@ export class UserControllerV1 {
   constructor(private readonly userService: UserService) {}
 
   @Put('update-or-create')
-  @HttpCode(HttpStatus.OK)
   @ApiOperation({
     summary: 'Update existing user or create new one',
     description:
@@ -48,7 +44,6 @@ export class UserControllerV1 {
       },
     },
   })
-  @ApiResponse({ status: 422, description: 'Validation error' })
   async updateOrCreate(@Body() updateOrCreateUserDto: UpdateOrCreateUserDto) {
     const user = await this.userService.updateOrCreateUser(
       updateOrCreateUserDto,
@@ -57,32 +52,10 @@ export class UserControllerV1 {
   }
 
   @Get('list')
-  @HttpCode(HttpStatus.OK)
   @ApiOperation({
     summary: 'Get paginated list of users',
     description:
       'Retrieves a paginated list of users with optional search functionality.',
-  })
-  @ApiQuery({
-    name: 'page',
-    required: false,
-    type: Number,
-    description: 'Page number (default: 1)',
-    example: 1,
-  })
-  @ApiQuery({
-    name: 'limit',
-    required: false,
-    type: Number,
-    description: 'Items per page (default: 10, max: 100)',
-    example: 10,
-  })
-  @ApiQuery({
-    name: 'search',
-    required: false,
-    type: String,
-    description: 'Search by username (case-insensitive)',
-    example: 'john',
   })
   @ApiResponse({
     status: 200,
@@ -112,24 +85,16 @@ export class UserControllerV1 {
       },
     },
   })
-  @ApiResponse({ status: 422, description: 'Validation error' })
   async getUsersList(@Query() query: GetUsersListDto) {
     const result = await this.userService.getUsersList(query);
     return successResponse(result, 'Users retrieved successfully');
   }
 
   @Get(':username')
-  @HttpCode(HttpStatus.OK)
   @ApiOperation({
     summary: 'Get user by username',
     description:
       'Retrieves detailed information about a user including their notes, statuses, and pets.',
-  })
-  @ApiParam({
-    name: 'username',
-    type: String,
-    description: 'Username of the user to retrieve',
-    example: 'john_doe',
   })
   @ApiResponse({
     status: 200,
@@ -154,17 +119,6 @@ export class UserControllerV1 {
       },
     },
   })
-  @ApiResponse({
-    status: 404,
-    description: 'User not found',
-    schema: {
-      example: {
-        statusCode: 404,
-        message: "User with username 'nonexistent' not found",
-      },
-    },
-  })
-  @ApiResponse({ status: 422, description: 'Validation error' })
   async getUserByUsername(@Param('username') username: string) {
     const user = await this.userService.getUserByUsername(username);
 

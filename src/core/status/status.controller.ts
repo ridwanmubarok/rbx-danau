@@ -7,7 +7,6 @@ import {
   Query,
   Put,
   Delete,
-  HttpCode,
   HttpStatus,
   NotFoundException,
 } from '@nestjs/common';
@@ -15,8 +14,6 @@ import {
   ApiTags,
   ApiOperation,
   ApiResponse,
-  ApiParam,
-  ApiQuery,
 } from '@nestjs/swagger';
 import { StatusService } from './status.service';
 import { successResponse } from 'src/utils/response.utils';
@@ -28,7 +25,6 @@ export class StatusControllerV1 {
   constructor(private readonly statusService: StatusService) {}
 
   @Post('create')
-  @HttpCode(HttpStatus.CREATED)
   @ApiOperation({
     summary: 'Create a new status',
     description: 'Creates a new status for a user.',
@@ -50,38 +46,15 @@ export class StatusControllerV1 {
       },
     },
   })
-  @ApiResponse({
-    status: 400,
-    description: 'Bad request - validation failed',
-  })
   async createStatus(@Body() createStatusDto: CreateStatusDto) {
     const result = await this.statusService.createStatus(createStatusDto);
-    return successResponse('Status created successfully', result);
+    return successResponse(result, 'Status created successfully');
   }
 
   @Get('list')
-  @HttpCode(HttpStatus.OK)
   @ApiOperation({
     summary: 'Get list of statuses',
     description: 'Retrieves a paginated list of statuses with optional filtering.',
-  })
-  @ApiQuery({
-    name: 'page',
-    required: false,
-    type: Number,
-    description: 'Page number for pagination',
-  })
-  @ApiQuery({
-    name: 'limit',
-    required: false,
-    type: Number,
-    description: 'Number of items per page',
-  })
-  @ApiQuery({
-    name: 'userId',
-    required: false,
-    type: Number,
-    description: 'Filter by user ID',
   })
   @ApiResponse({
     status: 200,
@@ -116,19 +89,13 @@ export class StatusControllerV1 {
   })
   async getStatusList(@Query() query: GetStatusListDto) {
     const result = await this.statusService.getStatusList(query);
-    return successResponse('Statuses retrieved successfully', result);
+    return successResponse(result, 'Statuses retrieved successfully');
   }
 
   @Get(':id')
-  @HttpCode(HttpStatus.OK)
   @ApiOperation({
     summary: 'Get status by ID',
     description: 'Retrieves a specific status by its ID.',
-  })
-  @ApiParam({
-    name: 'id',
-    type: Number,
-    description: 'Status ID',
   })
   @ApiResponse({
     status: 200,
@@ -151,28 +118,18 @@ export class StatusControllerV1 {
       },
     },
   })
-  @ApiResponse({
-    status: 404,
-    description: 'Status not found',
-  })
   async getStatusById(@Param('id') id: string) {
     const result = await this.statusService.getStatusById(parseInt(id));
     if (!result) {
       throw new NotFoundException('Status not found');
     }
-    return successResponse('Status retrieved successfully', result);
+    return successResponse(result, 'Status retrieved successfully');
   }
 
   @Put(':id')
-  @HttpCode(HttpStatus.OK)
   @ApiOperation({
     summary: 'Update status',
     description: 'Updates an existing status.',
-  })
-  @ApiParam({
-    name: 'id',
-    type: Number,
-    description: 'Status ID',
   })
   @ApiResponse({
     status: 200,
@@ -191,10 +148,6 @@ export class StatusControllerV1 {
       },
     },
   })
-  @ApiResponse({
-    status: 404,
-    description: 'Status not found',
-  })
   async updateStatus(
     @Param('id') id: string,
     @Body() updateStatusDto: UpdateStatusDto,
@@ -203,19 +156,13 @@ export class StatusControllerV1 {
       parseInt(id),
       updateStatusDto,
     );
-    return successResponse('Status updated successfully', result);
+    return successResponse(result, 'Status updated successfully');
   }
 
   @Delete(':id')
-  @HttpCode(HttpStatus.OK)
   @ApiOperation({
     summary: 'Delete status',
     description: 'Deletes a status by its ID.',
-  })
-  @ApiParam({
-    name: 'id',
-    type: Number,
-    description: 'Status ID',
   })
   @ApiResponse({
     status: 200,
@@ -228,12 +175,8 @@ export class StatusControllerV1 {
       },
     },
   })
-  @ApiResponse({
-    status: 404,
-    description: 'Status not found',
-  })
   async deleteStatus(@Param('id') id: string) {
     await this.statusService.deleteStatus(parseInt(id));
-    return successResponse('Status deleted successfully', null);
+    return successResponse(null, 'Status deleted successfully');
   }
 }
