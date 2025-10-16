@@ -9,6 +9,7 @@ import { AppService } from './app.service';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import appConfig from './config/app.config';
 import { UserModule } from './core/user/user.module';
+import { StatusModule } from './core/status/status.module';
 import { LoggerMiddleware } from './common/middleware/logger.middleware';
 import { CorsMiddleware } from './common/middleware/cors.middleware';
 
@@ -19,6 +20,7 @@ import { CorsMiddleware } from './common/middleware/cors.middleware';
       load: [appConfig],
     }),
     UserModule,
+    StatusModule,
   ],
   controllers: [AppController],
   providers: [AppService],
