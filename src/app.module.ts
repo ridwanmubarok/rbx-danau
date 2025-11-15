@@ -52,6 +52,10 @@ export class AppModule implements NestModule {
     consumer
       .apply(StaticTokenAuthMiddleware)
       .exclude(
+        // Unversioned docs
+        { path: 'docs', method: RequestMethod.GET },
+        { path: 'docs-json', method: RequestMethod.GET },
+        // Versioned docs
         { path: 'v1/docs', method: RequestMethod.GET },
         { path: 'v1/docs-json', method: RequestMethod.GET },
       )

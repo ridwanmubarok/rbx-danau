@@ -29,7 +29,7 @@ export function swaggerConfig(
     .build();
 
   const document = SwaggerModule.createDocument(app, setup);
-
-  // With globalPrefix('api'), this results in /api/v{version}/docs
+  // Mount Swagger at both /api/docs and /api/v{version}/docs
+  SwaggerModule.setup('docs', app, document);
   SwaggerModule.setup(`v${apiVersion}/docs`, app, document);
 }
