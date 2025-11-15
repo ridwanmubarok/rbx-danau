@@ -9,8 +9,6 @@ services:
       target: production
     container_name: rbx-danau-app
     restart: unless-stopped
-    ports:
-      - '${APP_PORT:-3000}:3000'
     environment:
       NODE_ENV: ${NODE_ENV:-production}
       DATABASE_URL: ${DATABASE_URL}

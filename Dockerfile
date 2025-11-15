@@ -50,7 +50,7 @@ EXPOSE 3000
 
 # Health check
 HEALTHCHECK --interval=30s --timeout=3s --start-period=40s \
-  CMD node -e "require('http').get('http://localhost:3000/api/v1', (r) => {if(r.statusCode !== 404) process.exit(1)})"
+  CMD node -e "const p=process.env.APP_PORT||3000;require('http').get('http://localhost:'+p+'/api/v1',(r)=>{if(r.statusCode!==404)process.exit(1)})"
 
 # Start application
 CMD ["node", "dist/main"]
