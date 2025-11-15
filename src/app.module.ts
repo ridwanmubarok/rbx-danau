@@ -48,9 +48,13 @@ export class AppModule implements NestModule {
       path: '/*',
       method: RequestMethod.ALL,
     });
-    consumer.apply(StaticTokenAuthMiddleware).forRoutes({
-      path: '/api/*',
-      method: RequestMethod.ALL,
-    });
+    // Apply to all routes; exclude Swagger endpoints so UI works without auth
+    consumer
+      .apply(StaticTokenAuthMiddleware)
+      .exclude(
+        { path: 'v1/docs', method: RequestMethod.GET },
+        { path: 'v1/docs-json', method: RequestMethod.GET },
+      )
+      .forRoutes({ path: '/*', method: RequestMethod.ALL });
   }
 }

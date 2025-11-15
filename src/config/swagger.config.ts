@@ -30,5 +30,6 @@ export function swaggerConfig(
 
   const document = SwaggerModule.createDocument(app, setup);
 
-  SwaggerModule.setup(`/api/v${apiVersion}/docs`, app, document);
+  // With globalPrefix('api'), this results in /api/v{version}/docs
+  SwaggerModule.setup(`v${apiVersion}/docs`, app, document);
 }
