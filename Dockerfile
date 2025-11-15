@@ -1,8 +1,8 @@
 # Multi-stage build for optimized production image
 FROM node:20-alpine AS base
 
-# Install pnpm
-RUN npm install -g pnpm
+# Pin pnpm via Corepack to match lockfile v6
+RUN corepack enable && corepack prepare pnpm@8.15.8 --activate
 
 # Set working directory
 WORKDIR /app
@@ -22,13 +22,14 @@ RUN npx prisma generate
 FROM base AS build
 COPY --from=dependencies /app/node_modules ./node_modules
 COPY . .
+RUN npx prisma generate
 RUN pnpm run build
 
 # Production image
 FROM node:20-alpine AS production
 
-# Install pnpm
-RUN npm install -g pnpm
+# Pin pnpm via Corepack to match lockfile v6
+RUN corepack enable && corepack prepare pnpm@8.15.8 --activate
 
 WORKDIR /app
 

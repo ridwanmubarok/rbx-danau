@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { PrismaService } from 'src/common/services/prisma/prisma.service';
 import { GetFeedbacksListDto } from '../dto/get-feedbacks-list.dto';
-import { Prisma } from 'generated/prisma';
+import { Prisma } from '../../../../generated/prisma';
 
 @Injectable()
 export class GetFeedbacksListUseCase {
