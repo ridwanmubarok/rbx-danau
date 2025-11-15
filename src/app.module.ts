@@ -38,7 +38,7 @@ export class AppModule implements NestModule {
   static appPrefix: string;
   static environment: string;
   constructor(private readonly configService: ConfigService) {
-    AppModule.port = +this.configService.get('APP_PORT', '3333');
+    AppModule.port = +this.configService.get('APP_PORT', '3000');
     AppModule.appVersion = this.configService.get('APP_VERSION', '1');
     AppModule.appPrefix = this.configService.get('APP_PREFIX', 'api');
     AppModule.environment = this.configService.get('NODE_ENV', 'development');
