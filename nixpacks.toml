@@ -1,19 +1,11 @@
-[
-  phases.setup
-]
-nixPkgs = ["nodejs_20"]
-
-[
-  phases.install
-]
+[phases.install]
 cmds = [
-  "corepack enable && corepack prepare pnpm@8.15.8 --activate",
+  "corepack enable",
+  "corepack prepare pnpm@8.15.8 --activate",
   "pnpm install --frozen-lockfile"
 ]
 
-[
-  phases.build
-]
+[phases.build]
 cmds = [
   "npx prisma generate",
   "pnpm run build"
