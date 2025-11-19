@@ -11,6 +11,7 @@ import appConfig from './config/app.config';
 import { UserModule } from './core/user/user.module';
 import { FeedbackModule } from './core/feedback/feedback.module';
 import { StatusModule } from './core/status/status.module';
+import { EventModule } from './core/event/event.module';
 import { LoggerMiddleware } from './common/middleware/logger.middleware';
 import { CorsMiddleware } from './common/middleware/cors.middleware';
 import { NoteModule } from './core/note/note.module';
@@ -26,6 +27,7 @@ import { StaticTokenAuthMiddleware } from './common/middleware/static-token-auth
     UserModule,
     FeedbackModule,
     StatusModule,
+    EventModule,
     NoteModule,
     PetModule,
   ],
