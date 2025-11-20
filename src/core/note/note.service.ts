@@ -5,13 +5,9 @@ import {
   UpdateNoteUseCase,
   GetNotesListUseCase,
   GetNoteByIdUseCase,
-  DeleteNoteUseCase
+  DeleteNoteUseCase,
 } from './use-cases';
-import {
-  CreateNoteDto,
-  UpdateNoteDto,
-  GetNotesListDto
-} from './dto';
+import { CreateNoteDto, UpdateNoteDto, GetNotesListDto } from './dto';
 
 @Injectable()
 export class NoteService {

@@ -7,7 +7,7 @@ import {
   UpdateNoteUseCase,
   GetNotesListUseCase,
   GetNoteByIdUseCase,
-  DeleteNoteUseCase
+  DeleteNoteUseCase,
 } from './use-cases';
 
 @Module({
@@ -19,8 +19,8 @@ import {
     UpdateNoteUseCase,
     GetNotesListUseCase,
     GetNoteByIdUseCase,
-    DeleteNoteUseCase
+    DeleteNoteUseCase,
   ],
-  exports: [NoteService]
+  exports: [NoteService],
 })
 export class NoteModule {}

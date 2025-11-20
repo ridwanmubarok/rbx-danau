@@ -12,7 +12,7 @@ export class CreateStatusUseCase {
 
     // Check if user exists
     const user = await this.prisma.user.findUnique({
-      where: { id: userId }
+      where: { id: userId },
     });
 
     if (!user) {
@@ -24,16 +24,16 @@ export class CreateStatusUseCase {
       data: {
         userId,
         description,
-        imageUrl
+        imageUrl,
       },
       include: {
         user: {
           select: {
             id: true,
-            username: true
-          }
-        }
-      }
+            username: true,
+          },
+        },
+      },
     });
   }
 }

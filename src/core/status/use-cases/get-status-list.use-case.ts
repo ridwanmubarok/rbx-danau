@@ -11,9 +11,7 @@ export class GetStatusListUseCase {
     const skip = (page - 1) * limit;
 
     // Build where clause for filtering
-    const where = userId
-      ? { userId }
-      : {};
+    const where = userId ? { userId } : {};
 
     // Get statuses with pagination
     const [statuses, total] = await Promise.all([
@@ -22,18 +20,18 @@ export class GetStatusListUseCase {
         skip,
         take: limit,
         orderBy: {
-          createdAt: 'desc'
+          createdAt: 'desc',
         },
         include: {
           user: {
             select: {
               id: true,
-              username: true
-            }
-          }
-        }
+              username: true,
+            },
+          },
+        },
       }),
-      this.prisma.status.count({ where })
+      this.prisma.status.count({ where }),
     ]);
 
     const totalPages = Math.ceil(total / limit);
@@ -44,8 +42,8 @@ export class GetStatusListUseCase {
         currentPage: page,
         totalPages,
         totalItems: total,
-        itemsPerPage: limit
-      }
+        itemsPerPage: limit,
+      },
     };
   }
 }

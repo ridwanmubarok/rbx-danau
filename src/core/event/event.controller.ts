@@ -60,14 +60,15 @@ export class EventControllerV1 {
   })
   async createEvent(@Body() createEventDto: CreateEventDto) {
     const result = await this.eventService.createEvent(createEventDto);
-    return successResponse('Event created successfully', result);
+    return successResponse(result, 'Event created successfully');
   }
 
   @Get('list')
   @HttpCode(HttpStatus.OK)
   @ApiOperation({
     summary: 'Get list of events',
-    description: 'Retrieves a paginated list of events with optional filtering.',
+    description:
+      'Retrieves a paginated list of events with optional filtering.',
   })
   @ApiQuery({
     name: 'page',
@@ -130,7 +131,7 @@ export class EventControllerV1 {
   })
   async getEventList(@Query() query: GetEventListDto) {
     const result = await this.eventService.getEventList(query);
-    return successResponse('Events retrieved successfully', result);
+    return successResponse(result, 'Events retrieved successfully');
   }
 
   @Get(':id')
@@ -178,7 +179,7 @@ export class EventControllerV1 {
     if (!result) {
       throw new NotFoundException('Event not found');
     }
-    return successResponse('Event retrieved successfully', result);
+    return successResponse(result, 'Event retrieved successfully');
   }
 
   @Put(':id')
@@ -225,7 +226,7 @@ export class EventControllerV1 {
       parseInt(id),
       updateEventDto,
     );
-    return successResponse('Event updated successfully', result);
+    return successResponse(result, 'Event updated successfully');
   }
 
   @Delete(':id')
@@ -256,6 +257,6 @@ export class EventControllerV1 {
   })
   async deleteEvent(@Param('id') id: string) {
     await this.eventService.deleteEvent(parseInt(id));
-    return successResponse('Event deleted successfully', null);
+    return successResponse(null, 'Event deleted successfully');
   }
 }

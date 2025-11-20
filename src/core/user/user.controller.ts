@@ -5,14 +5,9 @@ import {
   Param,
   Query,
   Put,
-  HttpStatus,
   NotFoundException,
 } from '@nestjs/common';
-import {
-  ApiTags,
-  ApiOperation,
-  ApiResponse,
-} from '@nestjs/swagger';
+import { ApiTags, ApiOperation, ApiResponse } from '@nestjs/swagger';
 import { UserService } from './user.service';
 import { successResponse } from 'src/utils/response.utils';
 import { UpdateOrCreateUserDto, GetUsersListDto } from './dto';

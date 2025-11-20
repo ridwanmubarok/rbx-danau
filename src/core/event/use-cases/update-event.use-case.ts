@@ -2,15 +2,16 @@ import { Injectable } from '@nestjs/common';
 import { PrismaService } from 'src/common/services/prisma/prisma.service';
 import { UpdateEventDto } from '../dto/update-event.dto';
 import { NotFoundException } from '@nestjs/common';
+import { Prisma } from 'generated/prisma';
 
 @Injectable()
 export class UpdateEventUseCase {
   constructor(private readonly prisma: PrismaService) {}
 
-  async execute(id: number, data: UpdateEventDto) {
+  async execute(id: number, data: UpdateEventDto): Promise<unknown> {
     // Check if event exists
     const existingEvent = await this.prisma.event.findUnique({
-      where: { id }
+      where: { id },
     });
 
     if (!existingEvent) {
@@ -18,15 +19,18 @@ export class UpdateEventUseCase {
     }
 
     // Convert dates to Date if they're strings
-    const updateData: any = { ...data };
+    const updateData: Prisma.EventUpdateInput = { ...data };
     if (data.startDate) {
-      updateData.startDate = typeof data.startDate === 'string' 
-        ? new Date(data.startDate) 
-        : data.startDate;
+      updateData.startDate =
+        typeof data.startDate === 'string'
+          ? new Date(data.startDate)
+          : data.startDate;
     }
     if (data.endDate !== undefined) {
-      updateData.endDate = data.endDate 
-        ? (typeof data.endDate === 'string' ? new Date(data.endDate) : data.endDate)
+      updateData.endDate = data.endDate
+        ? typeof data.endDate === 'string'
+          ? new Date(data.endDate)
+          : data.endDate
         : null;
     }
 
@@ -38,10 +42,10 @@ export class UpdateEventUseCase {
         user: {
           select: {
             id: true,
-            username: true
-          }
-        }
-      }
+            username: true,
+          },
+        },
+      },
     });
   }
 }

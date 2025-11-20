@@ -12,10 +12,10 @@ export class GetNoteByIdUseCase {
         user: {
           select: {
             id: true,
-            username: true
-          }
-        }
-      }
+            username: true,
+          },
+        },
+      },
     });
 
     if (!note) {

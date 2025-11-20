@@ -2,16 +2,14 @@ import { createZodDto } from 'nestjs-zod';
 import { z } from 'zod';
 
 export const GetStatusListSchema = z.object({
-  page: z
-    .coerce
+  page: z.coerce
     .number()
     .int()
     .min(1, 'Page must be at least 1')
     .default(1)
     .optional()
     .describe('Page number for pagination'),
-  limit: z
-    .coerce
+  limit: z.coerce
     .number()
     .int()
     .min(1, 'Limit must be at least 1')
@@ -19,8 +17,7 @@ export const GetStatusListSchema = z.object({
     .default(10)
     .optional()
     .describe('Number of items per page'),
-  userId: z
-    .coerce
+  userId: z.coerce
     .number()
     .int()
     .positive('User ID must be a positive integer')

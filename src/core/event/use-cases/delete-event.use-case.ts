@@ -6,10 +6,10 @@ import { NotFoundException } from '@nestjs/common';
 export class DeleteEventUseCase {
   constructor(private readonly prisma: PrismaService) {}
 
-  async execute(id: number) {
+  async execute(id: number): Promise<unknown> {
     // Check if event exists
     const existingEvent = await this.prisma.event.findUnique({
-      where: { id }
+      where: { id },
     });
 
     if (!existingEvent) {
@@ -18,7 +18,7 @@ export class DeleteEventUseCase {
 
     // Delete event
     return this.prisma.event.delete({
-      where: { id }
+      where: { id },
     });
   }
 }

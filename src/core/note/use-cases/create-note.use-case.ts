@@ -9,7 +9,7 @@ export class CreateNoteUseCase {
   async execute(data: CreateNoteDto) {
     // Verify user exists
     const userExists = await this.prisma.user.findUnique({
-      where: { id: data.userId }
+      where: { id: data.userId },
     });
 
     if (!userExists) {
@@ -19,16 +19,16 @@ export class CreateNoteUseCase {
     return this.prisma.note.create({
       data: {
         content: data.content,
-        userId: data.userId
+        userId: data.userId,
       },
       include: {
         user: {
           select: {
             id: true,
-            username: true
-          }
-        }
-      }
+            username: true,
+          },
+        },
+      },
     });
   }
 }

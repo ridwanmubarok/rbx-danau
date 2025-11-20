@@ -9,7 +9,7 @@ export class CreatePetUseCase {
   async execute(data: CreatePetDto) {
     // Verify owner exists
     const ownerExists = await this.prisma.user.findUnique({
-      where: { id: data.ownerId }
+      where: { id: data.ownerId },
     });
 
     if (!ownerExists) {
@@ -20,16 +20,16 @@ export class CreatePetUseCase {
       data: {
         petName: data.petName,
         rarity: data.rarity,
-        ownerId: data.ownerId
+        ownerId: data.ownerId,
       },
       include: {
         owner: {
           select: {
             id: true,
-            username: true
-          }
-        }
-      }
+            username: true,
+          },
+        },
+      },
     });
   }
 }

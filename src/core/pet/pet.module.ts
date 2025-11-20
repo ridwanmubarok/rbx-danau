@@ -7,7 +7,7 @@ import {
   UpdatePetUseCase,
   GetPetsListUseCase,
   GetPetByIdUseCase,
-  DeletePetUseCase
+  DeletePetUseCase,
 } from './use-cases';
 
 @Module({
@@ -19,8 +19,8 @@ import {
     UpdatePetUseCase,
     GetPetsListUseCase,
     GetPetByIdUseCase,
-    DeletePetUseCase
+    DeletePetUseCase,
   ],
-  exports: [PetService]
+  exports: [PetService],
 })
 export class PetModule {}

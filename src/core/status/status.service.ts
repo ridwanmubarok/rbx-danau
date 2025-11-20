@@ -1,17 +1,13 @@
 import { Injectable } from '@nestjs/common';
 import { PrismaService } from 'src/common/services/prisma/prisma.service';
-import { 
+import {
   CreateStatusUseCase,
   UpdateStatusUseCase,
   GetStatusListUseCase,
   GetStatusByIdUseCase,
-  DeleteStatusUseCase
+  DeleteStatusUseCase,
 } from './use-cases';
-import { 
-  CreateStatusDto,
-  UpdateStatusDto,
-  GetStatusListDto
-} from './dto';
+import { CreateStatusDto, UpdateStatusDto, GetStatusListDto } from './dto';
 
 @Injectable()
 export class StatusService {

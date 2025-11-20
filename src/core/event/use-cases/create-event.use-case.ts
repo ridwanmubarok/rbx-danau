@@ -7,12 +7,12 @@ import { BadRequestException } from 'src/common/exceptions/badRequest.exception'
 export class CreateEventUseCase {
   constructor(private readonly prisma: PrismaService) {}
 
-  async execute(data: CreateEventDto) {
+  async execute(data: CreateEventDto): Promise<unknown> {
     const { userId, title, description, startDate, endDate, location } = data;
 
     // Check if user exists
     const user = await this.prisma.user.findUnique({
-      where: { id: userId }
+      where: { id: userId },
     });
 
     if (!user) {
@@ -20,12 +20,13 @@ export class CreateEventUseCase {
     }
 
     // Convert dates to Date if they're strings
-    const parsedStartDate = typeof startDate === 'string' 
-      ? new Date(startDate) 
-      : startDate;
-    
-    const parsedEndDate = endDate 
-      ? (typeof endDate === 'string' ? new Date(endDate) : endDate)
+    const parsedStartDate =
+      typeof startDate === 'string' ? new Date(startDate) : startDate;
+
+    const parsedEndDate = endDate
+      ? typeof endDate === 'string'
+        ? new Date(endDate)
+        : endDate
       : undefined;
 
     // Create new event
@@ -36,16 +37,16 @@ export class CreateEventUseCase {
         description,
         startDate: parsedStartDate,
         endDate: parsedEndDate,
-        location
+        location,
       },
       include: {
         user: {
           select: {
             id: true,
-            username: true
-          }
-        }
-      }
+            username: true,
+          },
+        },
+      },
     });
   }
 }

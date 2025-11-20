@@ -7,14 +7,9 @@ import {
   Query,
   Put,
   Delete,
-  HttpStatus,
   NotFoundException,
 } from '@nestjs/common';
-import {
-  ApiTags,
-  ApiOperation,
-  ApiResponse,
-} from '@nestjs/swagger';
+import { ApiTags, ApiOperation, ApiResponse } from '@nestjs/swagger';
 import { StatusService } from './status.service';
 import { successResponse } from 'src/utils/response.utils';
 import { CreateStatusDto, UpdateStatusDto, GetStatusListDto } from './dto';
@@ -54,7 +49,8 @@ export class StatusControllerV1 {
   @Get('list')
   @ApiOperation({
     summary: 'Get list of statuses',
-    description: 'Retrieves a paginated list of statuses with optional filtering.',
+    description:
+      'Retrieves a paginated list of statuses with optional filtering.',
   })
   @ApiResponse({
     status: 200,

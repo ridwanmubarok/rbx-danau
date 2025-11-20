@@ -9,7 +9,7 @@ export class UpdateNoteUseCase {
   async execute(id: number, data: UpdateNoteDto) {
     // Check if note exists
     const existingNote = await this.prisma.note.findUnique({
-      where: { id }
+      where: { id },
     });
 
     if (!existingNote) {
@@ -19,16 +19,16 @@ export class UpdateNoteUseCase {
     return this.prisma.note.update({
       where: { id },
       data: {
-        content: data.content
+        content: data.content,
       },
       include: {
         user: {
           select: {
             id: true,
-            username: true
-          }
-        }
-      }
+            username: true,
+          },
+        },
+      },
     });
   }
 }

@@ -1,17 +1,13 @@
 import { Injectable } from '@nestjs/common';
 import { PrismaService } from 'src/common/services/prisma/prisma.service';
-import { 
+import {
   CreateEventUseCase,
   UpdateEventUseCase,
   GetEventListUseCase,
   GetEventByIdUseCase,
-  DeleteEventUseCase
+  DeleteEventUseCase,
 } from './use-cases';
-import { 
-  CreateEventDto,
-  UpdateEventDto,
-  GetEventListDto
-} from './dto';
+import { CreateEventDto, UpdateEventDto, GetEventListDto } from './dto';
 
 @Injectable()
 export class EventService {
@@ -24,23 +20,23 @@ export class EventService {
     private readonly deleteEventUseCase: DeleteEventUseCase,
   ) {}
 
-  async createEvent(data: CreateEventDto) {
+  async createEvent(data: CreateEventDto): Promise<unknown> {
     return this.createEventUseCase.execute(data);
   }
 
-  async updateEvent(id: number, data: UpdateEventDto) {
+  async updateEvent(id: number, data: UpdateEventDto): Promise<unknown> {
     return this.updateEventUseCase.execute(id, data);
   }
 
-  async getEventList(query: GetEventListDto) {
+  async getEventList(query: GetEventListDto): Promise<unknown> {
     return this.getEventListUseCase.execute(query);
   }
 
-  async getEventById(id: number) {
+  async getEventById(id: number): Promise<unknown> {
     return this.getEventByIdUseCase.execute(id);
   }
 
-  async deleteEvent(id: number) {
+  async deleteEvent(id: number): Promise<unknown> {
     return this.deleteEventUseCase.execute(id);
   }
 }

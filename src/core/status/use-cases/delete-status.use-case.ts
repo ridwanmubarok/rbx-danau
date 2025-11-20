@@ -9,7 +9,7 @@ export class DeleteStatusUseCase {
   async execute(id: number) {
     // Check if status exists
     const existingStatus = await this.prisma.status.findUnique({
-      where: { id }
+      where: { id },
     });
 
     if (!existingStatus) {
@@ -18,7 +18,7 @@ export class DeleteStatusUseCase {
 
     // Delete status
     return this.prisma.status.delete({
-      where: { id }
+      where: { id },
     });
   }
 }

@@ -12,10 +12,10 @@ export class GetStatusByIdUseCase {
         user: {
           select: {
             id: true,
-            username: true
-          }
-        }
-      }
+            username: true,
+          },
+        },
+      },
     });
   }
 }

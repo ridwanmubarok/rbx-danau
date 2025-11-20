@@ -1,6 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { PrismaService } from 'src/common/services/prisma/prisma.service';
 import { GetPetsListDto } from '../dto/get-pets-list.dto';
+import { Prisma } from 'generated/prisma';
 
 @Injectable()
 export class GetPetsListUseCase {
@@ -11,20 +12,20 @@ export class GetPetsListUseCase {
     const skip = (page - 1) * limit;
 
     // Build where clause
-    const where: any = {};
-    
+    const where: Prisma.PetWhereInput = {};
+
     if (ownerId) {
       where.ownerId = ownerId;
     }
-    
+
     if (rarity) {
       where.rarity = rarity;
     }
-    
+
     if (search) {
       where.petName = {
         contains: search,
-        mode: 'insensitive'
+        mode: 'insensitive',
       };
     }
 
@@ -35,18 +36,18 @@ export class GetPetsListUseCase {
         skip,
         take: limit,
         orderBy: {
-          petName: 'asc'
+          petName: 'asc',
         },
         include: {
           owner: {
             select: {
               id: true,
-              username: true
-            }
-          }
-        }
+              username: true,
+            },
+          },
+        },
       }),
-      this.prisma.pet.count({ where })
+      this.prisma.pet.count({ where }),
     ]);
 
     const totalPages = Math.ceil(total / limit);
@@ -56,7 +57,7 @@ export class GetPetsListUseCase {
       total,
       page,
       limit,
-      totalPages
+      totalPages,
     };
   }
 }

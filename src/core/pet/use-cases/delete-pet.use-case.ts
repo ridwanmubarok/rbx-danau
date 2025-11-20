@@ -13,10 +13,10 @@ export class DeletePetUseCase {
         owner: {
           select: {
             id: true,
-            username: true
-          }
-        }
-      }
+            username: true,
+          },
+        },
+      },
     });
 
     if (!existingPet) {
@@ -24,7 +24,7 @@ export class DeletePetUseCase {
     }
 
     await this.prisma.pet.delete({
-      where: { id }
+      where: { id },
     });
 
     return existingPet;

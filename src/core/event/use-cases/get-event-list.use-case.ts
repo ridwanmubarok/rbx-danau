@@ -1,6 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { PrismaService } from 'src/common/services/prisma/prisma.service';
 import { GetEventListDto } from '../dto/get-event-list.dto';
+import { Prisma } from 'generated/prisma';
 
 @Injectable()
 export class GetEventListUseCase {
@@ -11,15 +12,15 @@ export class GetEventListUseCase {
     const skip = (page - 1) * limit;
 
     // Build where clause for filtering
-    const where: any = {};
-    
+    const where: Prisma.EventWhereInput = {};
+
     if (userId) {
       where.userId = userId;
     }
 
     if (upcoming) {
       where.startDate = {
-        gte: new Date()
+        gte: new Date(),
       };
     }
 
@@ -30,18 +31,18 @@ export class GetEventListUseCase {
         skip,
         take: limit,
         orderBy: {
-          startDate: 'asc'
+          startDate: 'asc',
         },
         include: {
           user: {
             select: {
               id: true,
-              username: true
-            }
-          }
-        }
+              username: true,
+            },
+          },
+        },
       }),
-      this.prisma.event.count({ where })
+      this.prisma.event.count({ where }),
     ]);
 
     const totalPages = Math.ceil(total / limit);
@@ -52,8 +53,8 @@ export class GetEventListUseCase {
         currentPage: page,
         totalPages,
         totalItems: total,
-        itemsPerPage: limit
-      }
+        itemsPerPage: limit,
+      },
     };
   }
 }

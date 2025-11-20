@@ -13,10 +13,10 @@ export class DeleteNoteUseCase {
         user: {
           select: {
             id: true,
-            username: true
-          }
-        }
-      }
+            username: true,
+          },
+        },
+      },
     });
 
     if (!existingNote) {
@@ -24,7 +24,7 @@ export class DeleteNoteUseCase {
     }
 
     await this.prisma.note.delete({
-      where: { id }
+      where: { id },
     });
 
     return existingNote;

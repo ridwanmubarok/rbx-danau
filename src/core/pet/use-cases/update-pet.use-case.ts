@@ -9,7 +9,7 @@ export class UpdatePetUseCase {
   async execute(id: number, data: UpdatePetDto) {
     // Check if pet exists
     const existingPet = await this.prisma.pet.findUnique({
-      where: { id }
+      where: { id },
     });
 
     if (!existingPet) {
@@ -20,16 +20,16 @@ export class UpdatePetUseCase {
       where: { id },
       data: {
         ...(data.petName && { petName: data.petName }),
-        ...(data.rarity && { rarity: data.rarity })
+        ...(data.rarity && { rarity: data.rarity }),
       },
       include: {
         owner: {
           select: {
             id: true,
-            username: true
-          }
-        }
-      }
+            username: true,
+          },
+        },
+      },
     });
   }
 }

@@ -12,7 +12,7 @@ export class UpdateStatusUseCase {
 
     // Check if status exists
     const existingStatus = await this.prisma.status.findUnique({
-      where: { id }
+      where: { id },
     });
 
     if (!existingStatus) {
@@ -24,16 +24,16 @@ export class UpdateStatusUseCase {
       where: { id },
       data: {
         ...(description && { description }),
-        ...(imageUrl !== undefined && { imageUrl })
+        ...(imageUrl !== undefined && { imageUrl }),
       },
       include: {
         user: {
           select: {
             id: true,
-            username: true
-          }
-        }
-      }
+            username: true,
+          },
+        },
+      },
     });
   }
 }

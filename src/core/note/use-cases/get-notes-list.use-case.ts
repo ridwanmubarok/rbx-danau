@@ -1,6 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { PrismaService } from 'src/common/services/prisma/prisma.service';
 import { GetNotesListDto } from '../dto/get-notes-list.dto';
+import { Prisma } from 'generated/prisma';
 
 @Injectable()
 export class GetNotesListUseCase {
@@ -11,16 +12,16 @@ export class GetNotesListUseCase {
     const skip = (page - 1) * limit;
 
     // Build where clause
-    const where: any = {};
-    
+    const where: Prisma.NoteWhereInput = {};
+
     if (userId) {
       where.userId = userId;
     }
-    
+
     if (search) {
       where.content = {
         contains: search,
-        mode: 'insensitive'
+        mode: 'insensitive',
       };
     }
 
@@ -31,18 +32,18 @@ export class GetNotesListUseCase {
         skip,
         take: limit,
         orderBy: {
-          createdAt: 'desc'
+          createdAt: 'desc',
         },
         include: {
           user: {
             select: {
               id: true,
-              username: true
-            }
-          }
-        }
+              username: true,
+            },
+          },
+        },
       }),
-      this.prisma.note.count({ where })
+      this.prisma.note.count({ where }),
     ]);
 
     const totalPages = Math.ceil(total / limit);
@@ -52,7 +53,7 @@ export class GetNotesListUseCase {
       total,
       page,
       limit,
-      totalPages
+      totalPages,
     };
   }
 }

@@ -5,13 +5,9 @@ import {
   UpdatePetUseCase,
   GetPetsListUseCase,
   GetPetByIdUseCase,
-  DeletePetUseCase
+  DeletePetUseCase,
 } from './use-cases';
-import {
-  CreatePetDto,
-  UpdatePetDto,
-  GetPetsListDto
-} from './dto';
+import { CreatePetDto, UpdatePetDto, GetPetsListDto } from './dto';
 
 @Injectable()
 export class PetService {

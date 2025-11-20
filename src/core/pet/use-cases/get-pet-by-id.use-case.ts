@@ -12,10 +12,10 @@ export class GetPetByIdUseCase {
         owner: {
           select: {
             id: true,
-            username: true
-          }
-        }
-      }
+            username: true,
+          },
+        },
+      },
     });
 
     if (!pet) {
