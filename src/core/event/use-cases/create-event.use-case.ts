@@ -8,7 +8,7 @@ export class CreateEventUseCase {
   constructor(private readonly prisma: PrismaService) {}
 
   async execute(data: CreateEventDto): Promise<unknown> {
-    const { userId, title, description, startDate, endDate, location } = data;
+    const { userId, title, description, startDate, endDate } = data;
 
     // Check if user exists
     const user = await this.prisma.user.findUnique({
@@ -37,7 +37,6 @@ export class CreateEventUseCase {
         description,
         startDate: parsedStartDate,
         endDate: parsedEndDate,
-        location,
       },
       include: {
         user: {

@@ -3,8 +3,8 @@ import {
   NestMiddleware,
   UnauthorizedException,
 } from '@nestjs/common';
-import { Request, Response, NextFunction } from 'express';
 import { ConfigService } from '@nestjs/config';
+import { Request, Response, NextFunction } from 'express';
 
 @Injectable()
 export class StaticTokenAuthMiddleware implements NestMiddleware {

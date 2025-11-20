@@ -20,19 +20,12 @@ export const CreateEventSchema = z.object({
   startDate: z
     .string()
     .datetime('Start date must be a valid ISO 8601 datetime')
-    .or(z.date())
     .describe('The start date and time of the event'),
   endDate: z
     .string()
     .datetime('End date must be a valid ISO 8601 datetime')
-    .or(z.date())
     .optional()
     .describe('Optional end date and time of the event'),
-  location: z
-    .string()
-    .max(200, 'Location must not exceed 200 characters')
-    .optional()
-    .describe('Optional event location'),
 });
 
 export class CreateEventDto extends createZodDto(CreateEventSchema) {}

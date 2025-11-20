@@ -17,13 +17,11 @@ export const UpdateEventSchema = z.object({
   startDate: z
     .string()
     .datetime('Start date must be a valid ISO 8601 datetime')
-    .or(z.date())
     .optional()
     .describe('The start date and time of the event'),
   endDate: z
     .string()
     .datetime('End date must be a valid ISO 8601 datetime')
-    .or(z.date())
     .nullable()
     .optional()
     .describe('Optional end date and time of the event'),

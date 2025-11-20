@@ -4,10 +4,11 @@ import {
   ExecutionContext,
   UnauthorizedException,
 } from '@nestjs/common';
-import { Request } from 'express';
 import { RobloxSecurityService } from '../services/roblox-security/roblox-security.service';
 
-interface RobloxRequest extends Request {
+interface RobloxRequest {
+  headers: Record<string, string | string[] | undefined>;
+  body: Record<string, unknown>;
   robloxData?: {
     userId: number;
     timestamp: number;
@@ -55,7 +56,7 @@ export class RobloxSignatureGuard implements CanActivate {
     // Validate signature
     const isValid = this.robloxSecurity.validateSignature(
       signature,
-      request.body as Record<string, unknown>,
+      request.body,
       timestamp,
     );
 

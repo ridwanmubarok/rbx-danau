@@ -28,8 +28,11 @@ export function swaggerConfig(
     })
     .build();
 
+  // @ts-expect-error - Type mismatch due to pnpm duplicate @nestjs/common in dependency tree
   const document = SwaggerModule.createDocument(app, setup);
   // Mount Swagger at both /api/docs and /api/v{version}/docs
+  // @ts-expect-error - Type mismatch due to pnpm duplicate @nestjs/common in dependency tree
   SwaggerModule.setup('docs', app, document);
+  // @ts-expect-error - Type mismatch due to pnpm duplicate @nestjs/common in dependency tree
   SwaggerModule.setup(`v${apiVersion}/docs`, app, document);
 }
